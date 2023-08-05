@@ -96,10 +96,10 @@ def control(q):
         #         pydirectinput.moveRel(*mouse_aim, duration=1, relative=True)
 
         # test
-        # if not q.empty():
-        #     mouse_aim = q.get()
-        #     print(mouse_aim)
-        #     pydirectinput.moveRel(*mouse_aim, relative=True)
+        if not q.empty():
+            mouse_aim = q.get()
+            print(mouse_aim)
+            pydirectinput.moveRel(*mouse_aim, relative=True)
 
         if exit:
             break

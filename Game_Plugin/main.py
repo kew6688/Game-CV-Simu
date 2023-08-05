@@ -8,8 +8,8 @@ import numpy as np
 import argparse
 
 window_size = 640
-screen_resolution = (2560, 1440)
-game_title = "Game_Plugin"
+screen_resolution = (1920, 1080)
+game_title = "Apex Legends"
 grab_rect = (screen_resolution[0]//2-window_size//2, screen_resolution[1]//2-window_size//2, window_size, window_size)
 
 def nearest_obj(obj_lst):
@@ -56,7 +56,7 @@ def main():
 
         # screen shot      
         img = grab_screen_win32(game_title, grab_rect)
-        # print(img.shape)
+        print(img.shape)
 
         # detect objects
         box_lst = m.inference_img(img)
