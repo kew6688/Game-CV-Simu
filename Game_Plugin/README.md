@@ -29,3 +29,6 @@ single image detection and model export
 
 ``` train.ipynb ```
 train YOLO model, start with pre-trained yolov8n.pt
+
+## TODO
+pynput listener causing a lagging during gameplay. May due to poor CPU.
