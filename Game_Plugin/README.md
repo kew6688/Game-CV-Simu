@@ -13,6 +13,7 @@
     Using pynput as listener
     Using pydirectinput for in-game input
 
+![](https://github.com/kew6688/Game-CV-Simu/tree/main/Game_Plugin/gp.png)
 ### Game -> screen_grab -> obj_detect -> simul_control
 multiprocessing: one process handles game-play inference; sencond process handles keyboard listener and mouse input in game
 
