@@ -10,7 +10,7 @@ import pydirectinput
 
 left_pressed = False
 right_pressed = False
-aim_sensitive = 1.83
+aim_sensitive = 1
 flag_lock = False
 shot_interval = 0.1
 space_pressed = False
@@ -32,29 +32,28 @@ def on_press(key):
     global flag_lock,space_pressed,exit
     try:
         # print(key)
-        if key == keyboard.Key.home:
-            flag_lock = not flag_lock
-            print(f'aimbot: {flag_lock}')
+        if key == keyboard.KeyCode.from_char('f'):
+            flag_lock = True
+            # print(f'aimbot: {flag_lock}')
         if key == keyboard.Key.end:
             exit = True
-        if key == keyboard.Key.space:
-            print(key)
-        if key == keyboard.Key.ctrl_l:
-            # print("start poppy")
-            if space_pressed:
-                return
-            space_pressed = True
-            th = threading.Thread(target=poppy)
-            th.start()
-    except AttributeError:
+        # if key == keyboard.Key.space:
+        #     print(key)
+        # if key == keyboard.Key.ctrl_l:
+        #     # print("start poppy")
+        #     if space_pressed:
+        #         return
+        #     space_pressed = True
+        #     th = threading.Thread(target=poppy)
+        #     th.start()
+    except AttributeError: 
         print(f'special key {key} pressed')
 
 def on_release(key):
-    global space_pressed
+    global flag_lock
     # print("release",key)
-    if key == keyboard.Key.ctrl_l:
-        space_pressed = False
-        # print("stop poppy")
+    if key == keyboard.KeyCode.from_char('f'):
+        flag_lock = False
     return
 
 # mouse listener
@@ -80,41 +79,55 @@ def on_scroll(x,y,dx,dy):
     return
 
 def control(q):
-    global mouse_aim
+    global mouse_aim,exit
+    pydirectinput.PAUSE=0.01
     # prepare keyboard listener
     # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     #     listener.join()
+    # with mouse.Listener(on_press=on_press, on_release=on_release) as listener:
+    #     listener.join()
     listener = keyboard.Listener(on_press=on_press, on_release=on_release)
     listener.start()
-    mouse_listener = mouse.Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll)
-    mouse_listener.start()
+    # mouse_listener = mouse.Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll)
+    # mouse_listener.start()
     while True:
-        # if left_pressed and right_pressed and flag_lock:
-        #     while not q.empty():
-        #         pos = q.get()
-        #         mouse_aim = (pos[0] // aim_sensitive, pos[1] // aim_sensitive)
-        #         pydirectinput.moveRel(*mouse_aim, duration=1, relative=True)
+        if flag_lock or left_pressed and right_pressed:
+            try:
+                pos = q.get_nowait()
+                # print(pos)
+                mouse_aim = (int(pos[0] / aim_sensitive), int(pos[1] / aim_sensitive))
+                pydirectinput.moveRel(*mouse_aim, relative=True)
+            except multiprocessing.queues.Empty:
+                pass  
+            # while not q.empty():
+            #     pos = q.get()
+            #     print(pos)
+            #     mouse_aim = (int(pos[0] / aim_sensitive), int(pos[1] / aim_sensitive))
+            #     pydirectinput.moveRel(*mouse_aim, relative=True)
 
         # test
-        if not q.empty():
-            mouse_aim = q.get()
-            print(mouse_aim)
-            pydirectinput.moveRel(*mouse_aim, relative=True)
+        # if not q.empty():
+        #     mouse_aim = q.get()
+        #     print(mouse_aim)
+        #     pydirectinput.moveRel(*mouse_aim, relative=True)
 
         if exit:
             break
         
 
-# def main():
+def main():
+    global exit
+    listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+    listener.start()
+    mouse_listener = mouse.Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll)
+    mouse_listener.start()
+    while not exit:
+        pass
     # q = Queue()
-    # p_m = multiprocessing.Process(target=control,args=(q,))
-    # p_m.start()
-    # listener = keyboard.Listener(on_press=on_press, on_release=on_release)
-    # listener.start()
     # control(q)
 
-
-# main()
+if __name__ == '__main__':  
+    main()
 
 # screen = (2736,1824)
 # pyautogui.moveTo(screen)
