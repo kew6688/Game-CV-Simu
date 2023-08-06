@@ -7,13 +7,24 @@ import mss.tools
 import numpy
 import win32gui, win32ui, win32con, win32api
 
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import *
+import win32gui
+import sys
+ 
+hwnd = win32gui.FindWindow(None, 'C:\Windows\system32\cmd.exe')
+app = QApplication(sys.argv)
+screen = QApplication.primaryScreen()
+img = screen.grabWindow(hwnd).toImage()
+img.save("screenshot.jpg")
+
 # Reference: https://zhuanlan.zhihu.com/p/71533145
 # use browser to visit http://www.trex-game.skipser.com/
 # put the browser to the left side and run the programme
 
 key = Controller()
 
-web = (300, 800)
+web = (10, 10)
 # pyautogui.moveTo(web)
 
 tree1 = cv2.imread('tree1.png', 0)
@@ -27,7 +38,7 @@ tw2, th2 = tree2.shape[::-1]
 tree3 = cv2.imread('tree3.png', 0)
 tw3, th3 = tree3.shape[::-1]
 
-tree4 = cv2.imread('tree4.png', 0)
+tree4 = cv2.imread('tree5.png', 0)
 tw4, th4 = tree4.shape[::-1]
 
 bird = cv2.imread('bird2.png', 0)
@@ -112,7 +123,20 @@ def jump():
     key.release(Key.space)
     # key.press(Key.down)
 
+def show_active_win():
+    # Get all opened windows
+    hwnd_title = dict()
+    def get_all_hwnd(hwnd,mouse):
+        if win32gui.IsWindow(hwnd) and win32gui.IsWindowEnabled(hwnd) and win32gui.IsWindowVisible(hwnd):
+            hwnd_title.update({hwnd:win32gui.GetWindowText(hwnd)})
+    
+    win32gui.EnumWindows(get_all_hwnd, 0)
+    for h,t in hwnd_title.items():
+        if t != "":
+            print(h, t)
+    
 
+show_active_win()
 startgame()
   
 with mss.mss() as sct:
@@ -124,7 +148,7 @@ with mss.mss() as sct:
         # key.press(Key.down)
         # Get raw pixels from the screen, save it to a Numpy array
         # img = numpy.array(sct.grab(monitor))
-        img = grab_screen_win32("T-Rex Game. - Google Chrome", (220,770,900,300))
+        img = grab_screen_win32("Apex Legends", (180,240,500,300))
           
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
