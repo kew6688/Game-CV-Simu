@@ -1,14 +1,12 @@
-from multiprocessing import Process, set_start_method, Queue
+from multiprocessing import Process, set_start_method, Queue, Event
 import multiprocessing.queues
-from simul_control import control
+from simul_control import control, proc
 from screen_grab import grab_screen_win32
 from obj_detect import Detector
 import time
 import cv2
 import numpy as np
 import argparse
-import pydirectinput
-aim_sensitive = 0.2
 
 window_size = 640
 screen_resolution = (1920, 1080)
@@ -32,7 +30,7 @@ def draw_rect(img, bl):
     for obj in bl:
         r = obj.xyxy[0].astype(int)
         cv2.rectangle(img, r[:2], r[2:], (0, 0, 255), 2)
-        cv2.putText(img,f'{obj.cls[0]}_{obj.conf[0]}%',r[:2],cv2.FONT_HERSHEY_COMPLEX,0.8,(0, 255, 0), 2)
+        cv2.putText(img,f'enemy_{obj.conf[0]:.2f}',r[:2],cv2.FONT_HERSHEY_COMPLEX,0.8,(0, 255, 0), 2)
     
 def draw_fps(img,fps,t):
     if len(fps)>9:
@@ -51,7 +49,6 @@ def main(test=False):
     # initialize model
     m = Detector('models/best.engine')  
 
-
     fps = []
     # main loop starts
     while True:
@@ -66,7 +63,6 @@ def main(test=False):
         
         # send position
         pos = nearest_obj(box_lst)
-        # print(f"enemy at {pos}")
         try:
             while True:
                 q.get_nowait()
