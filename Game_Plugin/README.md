@@ -36,8 +36,8 @@ train YOLO model, start with pre-trained yolov8n.pt
 ### Screen Shots
     Several popular python screen shots method are tested. Performance for 10 shots are listed:
         - pil time: 18.548096656799316 FPS: 0.5391388768903264
-        - win32 time: 0.46700000762939453 FPS: 21.413275881433982
-        - PyQt time: 0.08246302604675293 FPS: 121.26646910010842
+        - win32 time: 0.44801950454711914 FPS: 22.320456807139475
+        - PyQt time: 0.17300081253051758 FPS: 57.80319672334479
         Both win32 and PyQt are implemented and can be switched in main program.
 
 ### Inference
