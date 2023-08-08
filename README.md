@@ -30,7 +30,7 @@ This project is an interest to extend my computer vision knowledge and programmi
 ### Game -> screen_grab -> obj_detect -> simul_control
 multiprocessing: one process handles game-play inference; sencond process handles keyboard listener and mouse input in game
 
-![Diagram](gp.png)
+![Diagram](Game_Plugin/gp.png)
 
 ## Run
 ``` python main.py ```
