@@ -1,4 +1,4 @@
-# Apex Legends Aim Assit
+# Aim Assit for FPS Game
 
 ## Design
 - ### Screen Shot: 
