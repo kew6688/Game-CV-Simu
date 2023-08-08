@@ -10,8 +10,9 @@
     export to tensorrt ('.engine'). 'best.pt' 10ms => 'best.engine' 4ms
     Achieve 80 FPS.
 - ### Simulation:
-    Using pynput as listener
-    Using pydirectinput for in-game input
+    Using pynput as listener.
+    Using pydirectinput for in-game input.
+    The Primary target is the one with the smallest Euclidean distance between the bounding box center and center of the screen (cursor). This approch maintain the stable of aiming. The relative distance of moving cursor is divided by aim_sensitive in order to have a adjustable aiming correctness.
   
 ### Game -> screen_grab -> obj_detect -> simul_control
 multiprocessing: one process handles game-play inference; sencond process handles keyboard listener and mouse input in game
