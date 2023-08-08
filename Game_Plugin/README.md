@@ -2,7 +2,7 @@
 
 ## Design
 - ### Screen Shot: 
-    win32gui lib.
+    Two methods are implemented: win32 api and PyQt.
     Achieve 300 FPS.
 - ### Inference: 
     Using YOLOv8n. 
