@@ -47,7 +47,7 @@ train YOLO model, start with pre-trained yolov8n.pt
     
 ## On Going: Track and Predict
     Current only pass discrete position. Apply Kalman filter on tracking object to predict position between frames.
-    Increase the speed of inference
+    Increase the speed of inference by model optimization.
     
 ## Issue:
     pynput listener causing a lagging during gameplay. May due to poor CPU.
