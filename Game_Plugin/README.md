@@ -42,8 +42,13 @@ train YOLO model, start with pre-trained yolov8n.pt
         Both win32 and PyQt are implemented and can be switched in main program.
 
 ### Inference
-    Predict on GPU achieve 15ms on average. 
-    By export model to TensorRT (".engine"), the inference time is less than 4ms on average.
+    object detect on GPU achieve 15ms on average. 
+    By export model to TensorRT for up to 5x GPU speed up (".engine"), the inference time is less than 4ms on average.
     
-## TODO
-pynput listener causing a lagging during gameplay. May due to poor CPU.
+## On Going: Track and Predict
+    Current only pass discrete position. Apply Kalman filter on tracking object to predict position between frames.
+    Increase the speed of inference
+    
+## Issue:
+    pynput listener causing a lagging during gameplay. May due to poor CPU.
+    - solved by move the listener to another process.
