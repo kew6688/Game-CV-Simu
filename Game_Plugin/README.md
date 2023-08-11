@@ -46,7 +46,8 @@ train YOLO model, start with pre-trained yolov8n.pt
     By export model to TensorRT for up to 5x GPU speed up (".engine"), the inference time is less than 4ms on average.
     
 ## On Going: Track and Predict
-    Current only pass discrete position. Apply Kalman filter on tracking object to predict position between frames.
+    Current only pass discrete position. Apply Kalman filter on tracking object to predict position between frames. 
+    -- solved by install pydirectinput-rgx
     Increase the speed of inference by model optimization.
     
 ## Issue:
